@@ -1,0 +1,13 @@
+{
+    "$schema": "/phpactor.schema.json",
+    "symfony.enabled": true,
+    "language_server_worse_reflection.inlay_hints.enable": true,
+    "language_server_worse_reflection.inlay_hints.params": true,
+    "language_server_worse_reflection.inlay_hints.types": false,
+    "indexer.exclude_patterns": [
+        "/vendor/**/Tests/**/*",
+        "/vendor/**/tests/**/*",
+        "/var/cache/**/*",
+        "/vendor/composer/**/*"
+    ]
+}
