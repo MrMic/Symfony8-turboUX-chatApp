@@ -1,35 +1,91 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %} {% block title 'Rooms' %} {% block body %}
+    <h1>{{ pluralize(rooms|length, 'Room') }}</h1>
 
-{% block title 'Rooms' %}
-
-{% block body %}
-    <h1>2 Rooms</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tboby>
-            <tr>
-                <td>TEACHERS DU NET</td>
-                <td><a href="#">Show</a></td>
-                <td><a href="#">Edit</a></td>
-                <td><a href="#">Delete</a></td>
-            </tr>
-            <tr>
-                <td>PARLONS CODE</td>
-                <td><a href="#">Show</a></td>
-                <td><a href="#">Edit</a></td>
-                <td><a href="#">Delete</a></td>
-            </tr>
-        </tboby>
-    </table>
-
+    {% if rooms is not empty %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                    <tr>
+                        <td>{{ room.name }}</td>
+                        <td>
+                            <a
+                                href="{{
+                                path(
+                                    'app_rooms_show',
+                                    {
+                                        id: room.id
+                                    }
+                                )
+                                }}"
+                            >
+                                Show
+                            </a>
+                        </td>
+                        <td>
+                            <a
+                                href="{{
+                                path(
+                                    'app_rooms_edit',
+                                    {
+                                        id: room.id
+                                    }
+                                )
+                                }}"
+                            >
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a
+                                href="#"
+                                onclick="event.preventDefault(); confirm('Are you sure?') && document.querySelector('#js-room-deletion-form-{{
+                                room.id
+                                }}').submit();"
+                            >
+                                Delete
+                            </a>
+                            <form
+                                id="js-room-deletion-form-{{ room.id }}"
+                                style="display: none"
+                                method="POST"
+                                action="{{
+                                path(
+                                    'app_rooms_delete',
+                                    {
+                                        id: room.id
+                                    }
+                                )
+                                }}"
+                            >
+                                <input
+                                    type="hidden"
+                                    name="_method"
+                                    value="DELETE"
+                                />
+                                <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    value="{{
+                                    csrf_token(
+                                        'rooms_deletion_' ~ room.id
+                                    )
+                                    }}"
+                                />
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
     <p>
-        <a href="#">New Room</a>
+        <a href="{{ path('app_rooms_new') }}">New Room</a>
     </p>
 {% endblock %}
