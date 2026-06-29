@@ -1,0 +1,19 @@
+---
+title: Model du chat
+---
+classDiagram
+    Room <|-- Message
+    class Room {
+        +int id
+        +String name
+        +Date createdAt
+        +Date updatedAt
+        +hasmany Message messages
+    }
+    class Message {
+        +int id
+        +String content
+        +Date createdAt
+        +Date updatedAt
+        +belongsTo Room room
+    }
