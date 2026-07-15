@@ -14,34 +14,8 @@
                 {% for room in rooms %}
                     <tr>
                         <td>{{ room.name }}</td>
-                        <td>
-                            <a
-                                href="{{
-                                path(
-                                    'app_rooms_show',
-                                    {
-                                        id: room.id
-                                    }
-                                )
-                                }}"
-                            >
-                                Show
-                            </a>
-                        </td>
-                        <td>
-                            <a
-                                href="{{
-                                path(
-                                    'app_rooms_edit',
-                                    {
-                                        id: room.id
-                                    }
-                                )
-                                }}"
-                            >
-                                Edit
-                            </a>
-                        </td>
+                        <td><a href="{{ path('app_rooms_show', { id: room.id }) }}">Show</a></td>
+                        <td><a href="{{ path('app_rooms_edit', { id: room.id }) }}">Edit</a></td>
                         <td>
                             <a
                                 href="#"
@@ -55,28 +29,13 @@
                                 id="js-room-deletion-form-{{ room.id }}"
                                 style="display: none"
                                 method="POST"
-                                action="{{
-                                path(
-                                    'app_rooms_delete',
-                                    {
-                                        id: room.id
-                                    }
-                                )
-                                }}"
+                                action="{{ path('app_rooms_delete', { id: room.id }) }}"
                             >
-                                <input
-                                    type="hidden"
-                                    name="_method"
-                                    value="DELETE"
-                                />
+                                <input type="hidden" name="_method" value="DELETE" />
                                 <input
                                     type="hidden"
                                     name="csrf_token"
-                                    value="{{
-                                    csrf_token(
-                                        'rooms_deletion_' ~ room.id
-                                    )
-                                    }}"
+                                    value="{{ csrf_token('rooms_deletion_' ~ room.id) }}"
                                 />
                             </form>
                         </td>
