@@ -25,6 +25,10 @@ class Message
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Room $room = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,5 +79,17 @@ class Message
         }
 
         $this->setUpdatedAt(new \DateTimeImmutable());
+    }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): static
+    {
+        $this->room = $room;
+
+        return $this;
     }
 }
