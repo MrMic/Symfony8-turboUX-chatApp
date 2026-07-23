@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title 'New Message' %}
+
+{# --- #}
+
+{% block body %}
+    <h1>New Message</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <br />
+
+    <button type="submit" formnovalidate>Send</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_rooms_show', { id: room.id }) }}">Back</a>
+{% endblock %}
