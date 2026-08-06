@@ -17,19 +17,10 @@
                         <td><a href="{{ path('app_rooms_show', { id: room.id }) }}">Show</a></td>
                         <td><a href="{{ path('app_rooms_edit', { id: room.id }) }}">Edit</a></td>
                         <td>
-                            <a
-                                href="#"
-                                onclick="event.preventDefault(); confirm('Are you sure?') && document.querySelector('#js-room-deletion-form-{{
-                                room.id
-                                }}').submit();"
-                            >
-                                Delete
-                            </a>
                             <form
-                                id="js-room-deletion-form-{{ room.id }}"
-                                style="display: none"
                                 method="POST"
                                 action="{{ path('app_rooms_delete', { id: room.id }) }}"
+                                data-turbo-confirm="Are you sure?"
                             >
                                 <input type="hidden" name="_method" value="DELETE" />
                                 <input
@@ -37,6 +28,7 @@
                                     name="csrf_token"
                                     value="{{ csrf_token('rooms_deletion_' ~ room.id) }}"
                                 />
+                                <button type="submit">Delete</button>
                             </form>
                         </td>
                     </tr>

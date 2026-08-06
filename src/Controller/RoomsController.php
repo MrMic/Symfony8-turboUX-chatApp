@@ -42,9 +42,11 @@ final class RoomsController extends AbstractController
         }
 
 
+        // Turbo ignore une réponse 200 non redirigée après soumission : 422 pour
+        // qu'il remplace le formulaire et affiche les erreurs de validation.
         return $this->render('rooms/new.html.twig', [
             'form' => $form->createView(),
-        ]);
+        ], new Response(null, $form->isSubmitted() ? 422 : 200));
     }
 
     #[Route('/rooms/{id<\d+>}', name: 'app_rooms_show', methods: ['GET'])]
@@ -71,10 +73,12 @@ final class RoomsController extends AbstractController
 
             return $this->redirectToRoute('app_rooms_show', ['id' => $room->getId()]);
         }
+        // Turbo ignore une réponse 200 non redirigée après soumission : 422 pour
+        // qu'il remplace le formulaire et affiche les erreurs de validation.
         return $this->render('rooms/edit.html.twig', [
             'room' => $room,
             'form' => $form->createView()
-        ]);
+        ], new Response(null, $form->isSubmitted() ? 422 : 200));
     }
 
     #[Route('/rooms/{id<\d+>}', name: 'app_rooms_delete', methods: ['DELETE'])]
