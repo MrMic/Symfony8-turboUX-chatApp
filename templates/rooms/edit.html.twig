@@ -1,31 +1,10 @@
 {% extends 'layouts/base.html.twig' %}
-
 {% block title 'iEdit Room' ~ room.name %}
-
 {# --- #}
-
 {% block body %}
     <h1>Edit Room {{ room.name }}</h1>
-
-    {{
-        include(
-            'rooms/_form.html.twig',
-            {
-                submit_button_label: 'Update Room'
-            }
-        )
-    }}
-
-    <a
-        href="{{
-        path(
-            'app_rooms_show',
-            {
-                id: room.id
-            }
-        )
-        }}"
-    >
-        Back
-    </a>
+    <turbo-frame id="room">
+        {{ include('rooms/_form.html.twig', { submit_button_label: 'Update Room' }) }}
+    </turbo-frame>
+    <a href="{{ path('app_rooms_show', { id: room.id }) }}">Back</a>
 {% endblock %}

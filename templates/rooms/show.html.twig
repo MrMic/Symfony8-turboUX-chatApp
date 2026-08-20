@@ -5,12 +5,14 @@
 {# --- #}
 
 {% block body %}
-    <h1>Name: {{ room.name }}</h1>
+    <turbo-frame id="room">
+        <h1>Name: {{ room.name }}</h1>
 
-    <p>
-        <a href="{{ path('app_rooms_edit', { id: room.id }) }}">Edit</a>
-        <a href="{{ path('app_rooms_index') }}">Back</a>
-    </p>
+        <p>
+            <a href="{{ path('app_rooms_edit', { id: room.id }) }}">Edit</a>
+            <a href="{{ path('app_rooms_index') }}">Back</a>
+        </p>
+    </turbo-frame>
 
     {% for message in room.messages %}
         <div>

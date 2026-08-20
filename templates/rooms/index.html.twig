@@ -1,39 +1,44 @@
 {% extends 'layouts/base.html.twig' %}
 {% block title 'Rooms' %}
-    {% block body %}
-        <h1>{{ pluralize(rooms|length, 'Room') }}</h1>
-        {% if rooms is not empty %}
-            <table>
-                <thead>
+{% block body %}
+    <h1>{{ pluralize(rooms|length, 'Room') }}</h1>
+
+    {% if rooms is not empty %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
                     <tr>
-                        <th>Name</th>
-                        <th></th>
-                        <th></th>
+                        <td>{{ room.name }}</td>
+                        <td><a href="{{ path('app_rooms_show', { id: room.id }) }}">Show</a></td>
+                        <td><a href="{{ path('app_rooms_edit', { id: room.id }) }}">Edit</a></td>
+                        <td>
+                            <form
+                                method="POST"
+                                action="{{ path('app_rooms_delete', { id: room.id }) }}"
+                                data-turbo-confirm="Are you sure?"
+                            >
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    value="{{ csrf_token('rooms_deletion_' ~ room.id) }}"
+                                />
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for room in rooms %}
-                        <tr>
-                            <td>{{ room.name }}</td>
-                            <td><a href="{{ path('app_rooms_show', { id: room.id }) }}">Show</a></td>
-                            <td><a href="{{ path('app_rooms_edit', { id: room.id }) }}">Edit</a></td>
-                            <td>
-                                <form method="POST"
-                                      action="{{ path('app_rooms_delete', { id: room.id }) }}"
-                                      data-turbo-confirm="Are you sure?">
-                                    <input type="hidden" name="_method" value="DELETE" />
-                                    <input type="hidden"
-                                           name="csrf_token"
-                                           value="{{ csrf_token('rooms_deletion_' ~ room.id) }}" />
-                                    <button type="submit">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-        <p>
-            <a href="{{ path('app_rooms_new') }}">New Room</a>
-        </p>
-    {% endblock %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <p>
+        <a href="{{ path('app_rooms_new') }}">New Room</a>
+    </p>
+{% endblock %}
