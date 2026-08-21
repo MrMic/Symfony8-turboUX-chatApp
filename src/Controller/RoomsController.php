@@ -59,9 +59,7 @@ final class RoomsController extends AbstractController
     #[Route('/rooms/{id<\d+>}/edit', name: 'app_rooms_edit', methods: ['GET', 'PUT'])]
     public function edit(Room $room, Request $request, EntityManagerInterface $em): Response
     {
-        $form = $this->createForm(RoomType::class, $room, [
-         'method' => 'PUT'
-        ]);
+        $form = $this->createForm(RoomType::class, $room, ['method' => 'PUT']);
 
         $form->handleRequest($request);
 
@@ -73,6 +71,7 @@ final class RoomsController extends AbstractController
 
             return $this->redirectToRoute('app_rooms_show', ['id' => $room->getId()]);
         }
+
         // Turbo ignore une réponse 200 non redirigée après soumission : 422 pour
         // qu'il remplace le formulaire et affiche les erreurs de validation.
         return $this->render('rooms/edit.html.twig', [
