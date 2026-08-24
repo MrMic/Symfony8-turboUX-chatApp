@@ -59,7 +59,12 @@ final class RoomsController extends AbstractController
     #[Route('/rooms/{id<\d+>}/edit', name: 'app_rooms_edit', methods: ['GET', 'PUT'])]
     public function edit(Room $room, Request $request, EntityManagerInterface $em): Response
     {
-        $form = $this->createForm(RoomType::class, $room, ['method' => 'PUT']);
+        // action explicite : dans un turbo-frame, l'URL du document reste celle
+        // de la page parente, donc un action="" posterait sur la mauvaise route.
+        $form = $this->createForm(RoomType::class, $room, [
+            'method' => 'PUT',
+            'action' => $this->generateUrl('app_rooms_edit', ['id' => $room->getId()]),
+        ]);
 
         $form->handleRequest($request);
 
