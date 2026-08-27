@@ -6,6 +6,8 @@
 
 {% block body %}
     <turbo-frame id="room_frame">
+        {{ include("layouts/partials/_flash_messages.html.twig") }}
+
         <h1>Name: {{ room.name }}</h1>
 
         <p>

@@ -24,7 +24,11 @@
         {% endif %}
     </head>
     <body>
-        {{ include("layouts/partials/_flash_messages.html.twig") }}
+        {# rendu ici seulement hors navigation de frame : sinon le layout
+           consommerait les flash avant que le frame les affiche #}
+        {% if not app.request.headers.has('Turbo-Frame') %}
+            {{ include("layouts/partials/_flash_messages.html.twig") }}
+        {% endif %}
         {% block body %}{% endblock %}
     </body>
 </html>

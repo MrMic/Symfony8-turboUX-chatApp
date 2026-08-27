@@ -2,7 +2,5 @@
 {{ form_widget(form) }}
 
 <br />
-<button class="submit" formnovalidate>
-    {{ submit_button_label ?? 'Create Room' }}
-</button>
+<button class="submit" formnovalidate>{{ submit_button_label ?? 'Create Room' }}</button>
 {{ form_end(form) }}
