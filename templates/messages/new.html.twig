@@ -5,8 +5,9 @@
 {# --- #}
 
 {% block body %}
-    <h1>New Message</h1>
+<h1>New Message</h1>
 
+<turbo-frame id="new_message_frame">
     {{ form_start(form) }}
     {{ form_widget(form) }}
 
@@ -14,6 +15,8 @@
 
     <button type="submit" formnovalidate>Send</button>
     {{ form_end(form) }}
+</turbo-frame>
 
-    <a href="{{ path('app_rooms_show', { id: room.id }) }}">Back</a>
+
+<a href="{{ path('app_rooms_show', { id: room.id }) }}">Back</a>
 {% endblock %}
