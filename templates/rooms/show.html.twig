@@ -26,6 +26,9 @@
     id="new_message_frame"
     src="{{ path('app_messages_new', { room: room.id }) }}"
     target="_top"
+    loading="lazy"
+    {# INFO: valeur par défaut : eager, lazy, auto #}
+    {# INFO: autoscroll est une autre option et lazy peut devenir inintéressant #}
   >
     Loading...
   </turbo-frame>
