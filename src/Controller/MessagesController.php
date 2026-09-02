@@ -13,15 +13,16 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class MessagesController extends AbstractController
 {
-    #[Route('/rooms/{room<\d+>}/messages/new', name: 'app_messages_new', methods: ['GET','POST'])]
+    #[Route('/rooms/{room<\d+>}/messages/new', name: 'app_messages_new', methods: ['GET', 'POST'])]
     public function new(Room $room, Request $request, EntityManagerInterface $em): Response
     {
-        $message = new Message();
+        $message = new Message;
 
-        $form = $this->createForm(MessageType::class, $message);
+        $form = $this->createForm(MessageType::class, $message, [
+            'action' => $this->generateUrl('app_messages_new', ['room' => $room->getId()]),
+        ]);
 
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $message->setRoom($room);
@@ -31,6 +32,7 @@ final class MessagesController extends AbstractController
 
             return $this->redirectToRoute('app_rooms_show', ['id' => $room->getId()]);
         }
+
         // Turbo ignore une réponse 200 non redirigée après soumission : 422 pour
         // qu'il remplace le formulaire et affiche les erreurs de validation.
         return $this->render('messages/new.html.twig', [

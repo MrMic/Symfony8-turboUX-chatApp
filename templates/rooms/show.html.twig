@@ -5,24 +5,28 @@
 {# --- #}
 
 {% block body %}
-<turbo-frame id="room_frame">
-    {{ include("layouts/partials/_flash_messages.html.twig") }}
+  <turbo-frame id="room_frame">
+    {{ include('layouts/partials/_flash_messages.html.twig') }}
 
     <h1>Name: {{ room.name }}</h1>
 
     <p>
-        <a href="{{ path('app_rooms_edit', { id: room.id }) }}">Edit</a>
-        <a href="{{ path('app_rooms_index') }}" data-turbo-frame="_top">Back</a>
+      <a href="{{ path('app_rooms_edit', { id: room.id }) }}">Edit</a>
+      <a href="{{ path('app_rooms_index') }}" data-turbo-frame="_top">Back</a>
     </p>
-</turbo-frame>
+  </turbo-frame>
 
-{% for message in room.messages %}
-<div>
-    {{ message.createdAt|date('d M H:i') }}: {{ message.content }}
-</div>
-{% endfor %}
+  {% for message in room.messages %}
+    <div>
+      {{ message.createdAt|date('d M H:i') }}: {{ message.content }}
+    </div>
+  {% endfor %}
 
-<turbo-frame id="new_message_frame" src="{{ path('app_messages_new', { room: room.id }) }}">
-</turbo-frame>
-
+  <turbo-frame
+    id="new_message_frame"
+    src="{{ path('app_messages_new', { room: room.id }) }}"
+    target="_top"
+  >
+    Loading...
+  </turbo-frame>
 {% endblock %}
